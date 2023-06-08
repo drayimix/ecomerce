@@ -1,44 +1,43 @@
 import { Model, DataTypes } from "sequelize";
 import { database } from "../database/db";
 import { Categoria } from "./categoria";
-import { Proveedor } from "./proveedor";
 
 export class Producto extends Model {
-    public nombre! : string;
-    public precio! : number;
+    public nombreProducto! : string;
+    public descripcionProducto! : string;
     // public imagen! : string;
-    public stock!: number;
-    public descripcion! : string;
+    public precioProducto!: number;
+    public stockProducto! : number;
 }
 
 export interface ProductoI {
-    nombre: string;
-    precio: number;
+    nombreProducto: string;
+    descripcionProducto: string;
     // imagen: string;
-    stock: number;
-    descripcion: string;
+    precioProducto: number;
+    stockProducto: number;
 }
 
 Producto.init(
     {
-        nombre: {
+        nombreProducto: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        precio: {
-            type: DataTypes.FLOAT,
+        descripcionProducto: {
+            type: DataTypes.STRING,
             allowNull: false
         },
         // imagen: {
         //     type: DataTypes.STRING,
         //     allowNull: false
         // },
-        stock: {
+        precioProducto: {
             type: DataTypes.FLOAT,
             allowNull: false
         },
-        descripcion: {
-            type: DataTypes.STRING,
+        stockProducto: {
+            type: DataTypes.FLOAT,
             allowNull: false
         },
         categoriaId: {
@@ -49,14 +48,6 @@ Producto.init(
                 key: 'id'
             },
         },
-        proveedorId: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: Proveedor,
-                key: 'id'
-            },
-        }
     },
     {
         tableName: "productos",
@@ -67,6 +58,3 @@ Producto.init(
 
 Producto.belongsTo(Categoria, { foreignKey: "categoriaId", as: 'categoria'});
 Categoria.hasMany(Producto, {foreignKey: "categoriaId"});
-
-Producto.belongsTo(Proveedor,{foreignKey: "proveedorId", as: 'proveedor'});
-Proveedor.hasMany(Producto,{foreignKey:"proveedorId"});
